@@ -11,9 +11,8 @@ A lightweight desktop chat app built with Python, designed for quick, temporary 
 [![License](https://img.shields.io/badge/License-MIT-00a86b?style=flat-square)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Early%20Development-orange?style=flat-square)]()
 
-<img src="assets/KrakenSpy.png" width="180" alt="KrakenSpy logo">
-
 [![Discord](https://img.shields.io/badge/Discord-Join%20the%20Server-5865F2?style=flat-square&logo=discord&logoColor=white)](https://dsc.gg/krakenpiracy)
+[![Website](https://img.shields.io/badge/Website-krakenpiracy.netlify.app-00a86b?style=flat-square)](https://krakenpiracy.netlify.app/)
 
 </div>
 
@@ -25,9 +24,17 @@ KrakenSpy is a small Windows chat application built around one simple idea:
 
 > **Enter a room code, talk, and leave almost nothing behind on your computer.**
 
-There are no user accounts, no profile system, and no local chat database. The current version uses a public MQTT relay so two people can communicate even when they are on completely different networks.
+There are no user accounts, no profile system, and no local chat database. The current version uses a public MQTT relay over **TLS** so two people can communicate even when they are on completely different networks.
 
 Messages are encrypted by the application before they are published to the relay, and each client removes displayed messages after **30 seconds**.
+
+Images are sent as encrypted, non-retained chunks through the relay. KrakenSpy downscales and compresses them before transfer, keeps received images in memory only, and removes their displayed copies after **10 minutes**.
+
+### Public room
+
+The home screen includes **Join Public Room**, a shared `KRAKENSPY-PUBLIC` channel that anyone using the app can enter without a code. A best-effort host election is used so one client can be shown as the current host. The host announcement is retained for later joiners and is cleared on a graceful exit. An unexpected disconnect can leave a stale marker until another client claims the room, so this is only a presence/community feature.
+
+The host is a presence/identity role only and is **not a security authority**. Messages still travel through the MQTT relay, so the room does not require the host computer to stay online for the broker to remain available.
 
 The project is open source so you can inspect, modify, build, and experiment with it yourself.
 
@@ -49,6 +56,7 @@ The project is open source so you can inspect, modify, build, and experiment wit
 | Windows `.exe` build script | ✅ |
 | Modern terminal-inspired UI | ✅ |
 | Real end-to-end identity verification | 🚧 |
+| Local community badge (not identity verification) | ✅ |
 | Decentralized relay / true serverless networking | 🚧 |
 | Mobile client | 🚧 |
 
@@ -81,11 +89,11 @@ KrakenSpy currently uses a **relay-based architecture**.
 
 Both clients make outbound connections to the relay, which means users do **not** need to be on the same Wi-Fi network and normally do not need router port forwarding.
 
-The relay is used for transport only. KrakenSpy does not maintain a chat-history database.
+The relay is used for transport only. KrakenSpy does not maintain a chat-history database. The current public relay is shared test infrastructure, so the project should not be treated as suitable for high-risk communications.
 
 ### Encryption
 
-The current prototype derives a symmetric encryption key from the room code and encrypts message payloads before sending them.
+The current prototype derives a symmetric encryption key from the room code and encrypts message payloads before sending them. The relay connection itself uses TLS.
 
 That means you should treat the room code like a password:
 
@@ -124,6 +132,12 @@ MESSAGE RECEIVED
 The 30-second rule currently applies to the **client's displayed copy**.
 
 It is not a cryptographic guarantee that every intermediary system has instantly erased every byte of the packet. The current app uses a public MQTT testing relay, so this project should be considered an **early privacy-focused prototype**, not a production secure-messaging platform.
+
+---
+
+## 🏷️ Community badge
+
+KrakenSpy includes an optional local community badge that can be enabled with the app's access code dialog (press **F8**). The badge is only a cosmetic/community marker carried in messages; it does **not** prove who a user is and is not a cryptographic identity-verification system.
 
 ---
 
@@ -214,6 +228,7 @@ KrakenSpy/
 ├── Receive.mp3           # Receive sound
 ├── README.md             # This file
 ├── LICENSE               # MIT license
+├── verified.png          # Community badge image
 └── assets/
     └── KrakenSpy.png     # README logo
 ```
@@ -284,7 +299,8 @@ However, **this is not yet a professionally audited secure messenger**.
 
 In particular:
 
-- The public MQTT relay is shared infrastructure.
+- The public MQTT relay is shared infrastructure and is provided for testing.
+- MQTT connections use TLS, while message payloads are encrypted by the application.
 - Room codes should be treated as secrets.
 - The current design does not provide a verified identity system.
 - Message expiry on a client is not proof of deletion from every network component.
@@ -320,7 +336,7 @@ https://dsc.gg/krakenpiracy
 - [ ] Better message animations
 - [ ] User presence panel
 - [ ] Typing indicator
-- [ ] Attachments
+- [x] Image attachments (ephemeral, in-memory)
 - [ ] Better identity verification
 - [ ] Safer dedicated relay infrastructure
 - [ ] STUN / ICE peer-to-peer mode
