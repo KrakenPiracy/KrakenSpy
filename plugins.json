@@ -1,0 +1,72 @@
+[
+  {
+    "name": "LuaTools",
+    "slug": "luatools",
+    "type": "github",
+    "source": "madoiscool/LuaTools",
+    "description": "LuaTools is a Windows app that lets you pirate Steam games and DLCs for free it unlocks paid games and DLCs, downloads them without buying, and cracks Steam's DRM."
+  },
+  {
+    "name": "Testing servers",
+    "slug": "another-tool",
+    "type": "github",
+    "source": "owner/repository",
+    "description": "Tool description here."
+  },
+  {
+    "name": "Yet Another Tool",
+    "slug": "yet-another-tool",
+    "type": "github",
+    "source": "owner/another-repository",
+    "description": "Another tool description here."
+  },
+  {
+    "name": "Sample Tool",
+    "slug": "sample-tool",
+    "type": "github",
+    "source": "owner/sample-repository",
+    "description": "Sample tool description here."
+  },
+  {
+    "name": "Test Tool",
+    "slug": "test-tool",
+    "type": "github",
+    "source": "owner/test-repository",
+    "description": "Test tool description here."
+  },
+  {
+    "name": "Demo Tool",
+    "slug": "demo-tool",
+    "type": "github",
+    "source": "owner/demo-repository",
+    "description": "Demo tool description here."
+  },
+  {
+    "name": "Another Tool",
+    "slug": "another-tool",
+    "type": "github",
+    "source": "owner/repository",
+    "description": "Tool description here."
+  },
+  {
+    "name": "Another Tool",
+    "slug": "another-tool",
+    "type": "github",
+    "source": "owner/repository",
+    "description": "Tool description here."
+  },
+  {
+    "name": "Another Tool",
+    "slug": "another-tool",
+    "type": "github",
+    "source": "owner/repository",
+    "description": "Tool description here."
+  },
+  {
+    "name": "Another Tool",
+    "slug": "another-tool",
+    "type": "github",
+    "source": "owner/repository",
+    "description": "Tool description here."
+  }
+]
