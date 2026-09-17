@@ -8,7 +8,7 @@
   },
   {
     "name": "Testing servers",
-    "slug": "another-tool",
+    "slug": "An other test",
     "type": "github",
     "source": "owner/repository",
     "description": "Tool description here."
